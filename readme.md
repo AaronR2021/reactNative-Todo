@@ -2,6 +2,8 @@ A basic Todo Application with 3 screens
 
 ### What I learnt when making this app
 - quick lookup
+
+- 
 '''
 import { useFocusEffect } from '@react-navigation/native';
 
