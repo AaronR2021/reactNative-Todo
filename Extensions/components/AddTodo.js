@@ -10,21 +10,20 @@ export const AddTodo = ({ navigation }) => {
   const [todoList, setTodoList] = useState([]);
   const [refetch, setRefetch] = useState(false);
 
-  const fetchInfo=()=>{
+  const fetchInfo = () => {
     AsyncStorage.getItem("todoList").then((arr) => {
-        setTodoList(arr ? JSON.parse(arr) : [])
+      setTodoList(arr ? JSON.parse(arr) : []);
     });
-  }
+  };
 
   useEffect(() => {
-    fetchInfo()
+    fetchInfo();
   }, []);
 
   useEffect(() => {
     if (refetch) {
-        fetchInfo()
-        setRefetch(false);
-
+      fetchInfo();
+      setRefetch(false);
     }
   }, [refetch]);
 
@@ -32,7 +31,7 @@ export const AddTodo = ({ navigation }) => {
     if (title.length > 0 && desc.length > 0) {
       //! add at the end of the array of objects.
       const newTodo = {
-        id:(Math.floor(Math.random() * (1000000 - 1 + 1)) + 1),
+        id: Math.floor(Math.random() * (1000000 - 1 + 1)) + 1,
         title,
         desc,
         isComplete: false,
@@ -45,17 +44,17 @@ export const AddTodo = ({ navigation }) => {
         .then((data) => {
           setRefetch(true);
           setDesc("");
-          setTitle("")
+          setTitle("");
         })
         .catch((e) => {
-            Alert.alert("Error", "Something went wrong", [
-                {
-                  text: "Cancel",
-                  onPress: () => console.log("Cancel Pressed"),
-                  style: "cancel",
-                },
-                { text: "OK", onPress: () => console.log("OK Pressed") },
-              ]);
+          Alert.alert("Error", "Something went wrong", [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+          ]);
         });
       //! navigate back to main screen
     } else {
@@ -71,7 +70,7 @@ export const AddTodo = ({ navigation }) => {
     }
   };
   const goHome = () => {
-    navigation.navigate("TodoList",true);
+    navigation.navigate("TodoList", true);
   };
   return (
     <View style={[addTodoStyle.container]}>

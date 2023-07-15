@@ -1,47 +1,49 @@
-import React,{useEffect,useState} from 'react'
-import { View,Button,ScrollView} from 'react-native'
-import {TileShow,ShowInfoTab} from "../components/components"
+import React, { useEffect, useState } from "react";
+import { View, Button, ScrollView } from "react-native";
+import { TileShow, ShowInfoTab } from "../components/components";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 
-export const DisplayTodo=({navigation,route})=>{
+export const DisplayTodo = ({ navigation, route }) => {
   const [todoList, setTodoList] = useState([]);
   const [displayInfo, setDislayInfo] = useState(false);
 
-  const fetchInfo=()=>{
+  const fetchInfo = () => {
     AsyncStorage.getItem("todoList").then((arr) => {
-        setTodoList(arr ? JSON.parse(arr) : [])
+      setTodoList(arr ? JSON.parse(arr) : []);
     });
-  }
+  };
 
-  const toggleInfo = (id) =>{
-    if(id){
-      const result = todoList.map(val=>{
-        val.isComplete=val.id==id?!val.isComplete:val.isComplete;
-        return val
-      })
+  const toggleInfo = (id) => {
+    if (id) {
+      const result = todoList.map((val) => {
+        val.isComplete = val.id == id ? !val.isComplete : val.isComplete;
+        return val;
+      });
       const updatedList = JSON.stringify(result);
-      AsyncStorage.setItem("todoList", updatedList).then(date=>fetchInfo());
-      
+      AsyncStorage.setItem("todoList", updatedList).then((date) => fetchInfo());
     }
-  }
+  };
 
   const showInfo = (id) => {
-  setDislayInfo(todoList.filter(val=>{return val.id==id} ))
-  fetchInfo()
-  }
+    setDislayInfo(
+      todoList.filter((val) => {
+        return val.id == id;
+      })
+    );
+    fetchInfo();
+  };
 
   useEffect(() => {
-    fetchInfo()
+    fetchInfo();
   }, [route]);
   useEffect(() => {
-    fetchInfo()
+    fetchInfo();
   }, []);
   useFocusEffect(
     React.useCallback(() => {
       // Function to run when screen comes into focus
-      fetchInfo()
-
+      fetchInfo();
 
       // Clean up function
       return () => {
@@ -50,21 +52,19 @@ export const DisplayTodo=({navigation,route})=>{
     }, [])
   );
 
-    return (
-      <ScrollView> 
-        {
-          displayInfo?<
-          ShowInfoTab displayInfo={displayInfo} 
-          setDislayInfo={setDislayInfo}
-          />:
-
-          todoList.filter(val=>{
-            return val.isComplete==false
-          }).map((val,index)=>{
+  return (
+    <ScrollView>
+      {displayInfo ? (
+        <ShowInfoTab displayInfo={displayInfo} setDislayInfo={setDislayInfo} />
+      ) : (
+        todoList
+          .filter((val) => {
+            return val.isComplete == false;
+          })
+          .map((val, index) => {
             return (
-              
-                //add component here & pass in title, desc,
-                <TileShow
+              //add component here & pass in title, desc,
+              <TileShow
                 title={val?.title}
                 desc={val?.desc}
                 isComplete={val.isComplete}
@@ -72,11 +72,10 @@ export const DisplayTodo=({navigation,route})=>{
                 key={index}
                 toggleInfo={toggleInfo}
                 showInfo={showInfo}
-                />
-              
-            )
+              />
+            );
           })
-        }
-      </ScrollView>
-    )
-  }
+      )}
+    </ScrollView>
+  );
+};

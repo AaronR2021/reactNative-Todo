@@ -1,12 +1,10 @@
-import { StyleSheet } from 'react-native';
-
-
+import { StyleSheet } from "react-native";
 
 export const btn = StyleSheet.create({
-btnClick:{
-    borderRadius:100,
-    width:30,
-    height:30,
-    backgroundColor:'green'
-}
+  btnClick: {
+    borderRadius: 100,
+    width: 30,
+    height: 30,
+    backgroundColor: "green",
+  },
 });

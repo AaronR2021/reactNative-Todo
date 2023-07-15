@@ -1,11 +1,20 @@
-Add Todo complete
-Completed Todo Completed
-Display Todo Completed
+A basic Todo Application with 3 screens
 
-## Pending
-move page transition to the bottom
-transition between completed todo and display todo (aka:pending todo)
-add todo should be a button absolute to the bottom of the page
+### What I learnt when making this app
+- quick lookup
+'''
+import { useFocusEffect } from '@react-navigation/native';
 
-## basic changes
-- change the basics app title for better feel
+  useFocusEffect(
+    React.useCallback(() => {
+      // Function to run when screen comes into focus
+      console.log('MyScreen is focused');
+
+      // Clean up function
+      return () => {
+        // Function to run when screen goes out of focus
+        console.log('MyScreen is unfocused');
+      };
+    }, [])
+  );
+'''
